@@ -115,7 +115,7 @@ module BlackStack
     end # selecting_dataset
 
     def selecting(worker, n)
-      if self.allowing_function.nil?
+      if self.selecting_function.nil?
         return self.selecting_dataset(worker, n).map { |o| o[self.field_primary_key.to_sym] }
       else
         # TODO: validar que retorna un array de strings

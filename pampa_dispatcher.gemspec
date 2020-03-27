@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'pampa_dispatcher'
-  s.version     = '1.1.3'
-  s.date        = '2020-01-25'
+  s.version     = '1.1.4'
+  s.date        = '2020-03-27'
   s.summary     = "THIS GEM IS STILL IN DEVELOPMENT STAGE. Distribute work along a pool of Pampa workers."
   s.description = "THIS GEM IS STILL IN DEVELOPMENT STAGE. Find documentation here: https://github.com/leandrosardi/pampa_dispatcher."
   s.authors     = ["Leandro Daniel Sardi"]
