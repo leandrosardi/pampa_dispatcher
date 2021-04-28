@@ -1,15 +1,31 @@
 # Pampa Dispatcher
 
-This gem is part of the BlackStack framework.
+**Pampa Dispatcher** distributes jobs along a pool of works over **[Pampa Workers](https://github.com/leandrosardi/pampa)**.
 
-It works over [Pampa](https://github.com/leandrosardi/pampa), and is useful to distribute work along a pool of Pampa workers.
+Note that any **dispatcher** works with a direct connection to the database. All the examples below will work this way.  
 
-Note that any dispatcher works with a direct connection to the database. All the examples below will work this way.  
+On the other hand, **workers** may be distributed worldwide, and don't require direct connection to the database.
+
+# Installation
+
+```cmd
+gem install pampa_dispatcher
+```
+
+The **Pampa Dispatcher** gem requires **[Sequel](https://sequel.jeremyevans.net/)** 4.28.0.
+
+
+# 1. Why Use Dispatchers?
+
+A **dispatcher** manage one single connection to the database when selecting the jobs to process from the database.
+Getting each **worker** accessign the database to select a job to process would generates a high and expensive I/O workload. 
 
 Finally, if you are planning to use this gem to either scrape website at a large scale, or run a bot farm, you will should work with the [Stealth Browser Automation](https://github.com/leandrosardi/stealth_browser_automation) gem too. 
 The examples in this document are using such gem to run a tiny web scraper.
 
-## Creating a Database Schema
+# 2. Getting Started
+
+## 2.1. Setting Up a Data Model
 
 Imagine you have to run a large farm of Pampa workers for a [distributed computing](https://en.wikipedia.org/wiki/Distributed_computing) task, or well you want to scrape some websites at a large scale.
 
@@ -23,17 +39,17 @@ create table webpage (
 GO
 ```
 
-Insert some records of webpages that you want to scrape.
-In order to make your example more effective, insert as many records as you can.
-One thausand records is good. 
+You will insert some records of web pages that you want to scrape.
+
 ```sql
 insert into webpage (id, url) values (newid(), 'https://www.walmart.ca/en/ip/hp-stream-14-cb110ca-14-inch-laptop-white-intel-celeron-n4000-intel-uhd-600-4gb-ram-64gb-emmc-windows-10-s-4jc81uaabl/6000198793458');
 insert into webpage (id, url) values (newid(), 'https://www.walmart.ca/en/ip/hp-17-by0002ca-173-laptop-natural-silver-and-ash-silver-core-i5-8250u-intel-uhd-graphics-620-8gb-ddr4-1-tb-5400-rpm-sata-windows-10-home-4bq83uaabl/6000198528157');
 insert into webpage (id, url) values (newid(), 'https://www.walmart.ca/en/ip/acer-aspire-3-156-laptop-amd-e2-9000-amd-radeon-r2-graphics-8-gb-ddr4-1-tb-hard-drive-windows-10-home-nxgnvaa019/6000197843008');
 ...
+...
 ```
 
-Since you are going to distribute the scraping of all these URLs along too many distributed Pampa workers, you need a way to know:
+Since you are going to **distribute** the scraping job of all these URLs along too many **workers**, you need a way to know:
 
 * which record has been assigned to what worker;
 * when it has been assigned;
@@ -60,7 +76,7 @@ alter table webpage add scrape_end_time datetime null;
 GO
 ```
 
-## Setting Up the Dispatcher
+## 2.2. Setting Up the Dispatcher
 
 First step in your script is to connect the database.
 
@@ -86,7 +102,7 @@ BlackStack::Pampa::set_division_name(
 DB = BlackStack::Pampa::db_connection
 ```
 
-Just below, setup a Sequel class to handle the database queries keeping them portable to any database engine.
+Just below, setup a [Sequel](https://sequel.jeremyevans.net/) class to handle the database queries keeping them portable to any database engine.
 
 ```ruby
 # Create a DB class using Sequel
@@ -136,14 +152,17 @@ dispatcher = BlackStack::Dispatcher.new({
 })
 ```
 
-## Getting Dispatcher Status
-*(pending: example02.rb)*
+## 2.3. Running Workers
 
-## Dispatching
-*(pending: running dispatcher.run)*
+*(pending)*
 
-## Queries Optimization
-*(pending: get the default SQL scripts)*
+## 2.4. Running Dispatcher
+
+*(pending)*
+
+# 3. Error Handling, Job-Retry and Fault Tolerance
+
+*(pending)*
 
 
 
