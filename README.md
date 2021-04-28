@@ -6,6 +6,9 @@ Note that any **dispatcher** works with a direct connection to the database. All
 
 On the other hand, **workers** may be distributed worldwide, and don't require direct connection to the database.
 
+Finally, if you are planning to use this gem to either scrape website at a large scale, or run a bot farm, you will should work with the [Stealth Browser Automation](https://github.com/leandrosardi/stealth_browser_automation) gem too. 
+The examples in this document are using such gem to run a tiny web scraper.
+
 # Installation
 
 ```cmd
@@ -17,11 +20,8 @@ The **Pampa Dispatcher** gem requires **[Sequel](https://sequel.jeremyevans.net/
 
 # 1. Why Use Dispatchers?
 
-A **dispatcher** manage one single connection to the database when selecting the jobs to process from the database.
+A **dispatcher** manage one single connection to the database when selecting the jobs to process from such a database.
 Getting each **worker** accessign the database to select a job to process would generates a high and expensive I/O workload. 
-
-Finally, if you are planning to use this gem to either scrape website at a large scale, or run a bot farm, you will should work with the [Stealth Browser Automation](https://github.com/leandrosardi/stealth_browser_automation) gem too. 
-The examples in this document are using such gem to run a tiny web scraper.
 
 # 2. Getting Started
 
